@@ -1,26 +1,36 @@
+# Este workflow lo llamo "Flutter Lint" porque analiza mi código automáticamente
 name: Flutter Lint
 
 on:
+  # Le digo a GitHub que ejecute este análisis cuando alguien haga un pull request hacia develop
   pull_request:
     branches: [ develop ]
+  # Y también cuando alguien haga push a cualquier rama que empiece por "feature/"
   push:
     branches: [ feature/** ]
 
 jobs:
   analyze:
+    # Defino un job llamado "analyze" y le indico que se ejecute en Ubuntu
     runs-on: ubuntu-latest
 
     steps:
+      # Paso 1: descargo mi código desde GitHub al servidor donde se corre la acción
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Paso 2: instalo Flutter en la versión exacta que uso localmente (3.35.3)
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.3' # la misma que tienes instalada
+          flutter-version: '3.35.3' # mantengo misma versión que en mi PC
 
+      # Paso 3: instalo todas las dependencias definidas en pubspec.yaml
       - name: Install dependencies
         run: flutter pub get
 
+      # Paso 4: ejecuto "flutter analyze" para verificar estilo, buenas prácticas y errores
       - name: Run analyze
         run: flutter analyze
+
+#probando workflow  de int 
