@@ -1,0 +1,26 @@
+name: Flutter Lint
+
+on:
+  pull_request:
+    branches: [ develop ]
+  push:
+    branches: [ feature/** ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.3' # la misma que tienes instalada
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run analyze
+        run: flutter analyze
