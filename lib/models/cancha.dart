@@ -1,37 +1,32 @@
-// Aquí defino cómo luce una "Cancha" en mi aplicación.
-// Es decir, el modelo que voy a usar para intercambiar datos entre el frontend y el backend.
+// lib/models/cancha.dart
+// Modelo de Cancha alineado con lo que devuelve el backend.
+// OJO: el backend envía "sede" como OBJETO { id, nombre, direccion }, no "sede_id".
+
+import 'sede.dart';
 
 class Cancha {
   final int id;
   final String nombre;
-  final String ubicacion;
-  final bool disponible;
+  final String deporte;
+  final bool activa;
+  final Sede sede; // <- ahora guardo el objeto Sede completo
 
-  // Constructor para crear una cancha
   Cancha({
     required this.id,
     required this.nombre,
-    required this.ubicacion,
-    required this.disponible,
+    required this.deporte,
+    required this.activa,
+    required this.sede,
   });
 
-  // Método para convertir un JSON (del backend) en un objeto Cancha
   factory Cancha.fromJson(Map<String, dynamic> json) {
     return Cancha(
-      id: json['id'],
-      nombre: json['nombre'],
-      ubicacion: json['ubicacion'],
-      disponible: json['disponible'],
+      id: json['id'] as int,
+      nombre: json['nombre'] as String,
+      deporte: json['deporte'] as String,
+      activa: json['activa'] as bool,
+      sede: Sede.fromJson(json['sede'] as Map<String, dynamic>), // <- parseo la sede
     );
   }
-
-  // Método para convertir un objeto Cancha en JSON (para enviar al backend)
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nombre': nombre,
-      'ubicacion': ubicacion,
-      'disponible': disponible,
-    };
-  }
 }
+

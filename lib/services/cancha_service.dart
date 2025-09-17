@@ -3,20 +3,24 @@ import 'package:http/http.dart' as http;
 import '../config/env.dart';
 import '../models/cancha.dart';
 
-// Este servicio es el "puente" entre el frontend y el backend.
-// Aquí creo métodos que llaman al backend usando HTTP.
+/// Servicio que habla con mi backend (Spring) para obtener las canchas.
 class CanchaService {
-  final String baseUrl = Env.apiUrl;
+  /// Traigo todas las canchas con un GET a `${Env.baseUrl}/api/canchas`.
+  Future<List<Cancha>> getCanchas() async {
+    final uri = Uri.parse('${Env.baseUrl}/api/canchas/activas');
 
-  // Método para obtener todas las canchas desde el backend
-  Future<List<Cancha>> obtenerCanchas() async {
-    final response = await http.get(Uri.parse('$baseUrl/canchas'));
+    final resp = await http.get(uri, headers: {
+      'Content-Type': 'application/json',
+    });
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
-      return data.map((json) => Cancha.fromJson(json)).toList();
-    } else {
-      throw Exception("Error al cargar las canchas");
+    if (resp.statusCode == 200) {
+      // Mi backend devuelve un JSON con lista de canchas
+      final List data = json.decode(resp.body);
+      return data.map((e) => Cancha.fromJson(e as Map<String, dynamic>)).toList();
     }
+
+    // Si algo falla, lanzo una excepción para mostrar error en UI
+    throw Exception('Error ${resp.statusCode} al cargar canchas');
   }
 }
+

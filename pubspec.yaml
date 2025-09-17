@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
 
   # Paquete HTTP para hacer solicitudes REST a mi backend (GET/POST/PUT/DELETE).
-  http: ^1.2.2
+  http: ^1.5.0
 
   # Íconos estilo iOS (opcional, útil si los necesito).
   cupertino_icons: ^1.0.8
