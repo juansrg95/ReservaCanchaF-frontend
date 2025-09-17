@@ -1,13 +1,10 @@
 // lib/ui/home_page.dart
-// Lista de canchas -> navega al detalle
+// Pantalla principal donde muestro el listado de canchas.
+// Incluye: pull-to-refresh, navegación al detalle y uso de la imagen por cancha en la pantalla de detalle.
 
 import 'package:flutter/material.dart';
-
-// IMPORTA tu modelo y el servicio:
 import '../models/cancha.dart';
 import '../services/cancha_service.dart';
-
-// IMPORTA la pantalla de detalle (esto arregla tu error)
 import 'cancha_detail_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,16 +80,19 @@ class _HomePageState extends State<HomePage> {
               separatorBuilder: (_, __) => const SizedBox(height: 8),
               itemBuilder: (context, i) {
                 final c = canchas[i];
+
                 final disponible = c.activa;
-                final icono = disponible ? Icons.check_circle : Icons.cancel;
-                final color = disponible ? Colors.green : Colors.red;
+                final dispIcon = disponible ? Icons.check_circle : Icons.cancel;
+                final dispColor = disponible ? Colors.green : Colors.red;
 
                 return Card(
                   elevation: 2,
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: color.withOpacity(0.15),
-                      child: Icon(icono, color: color),
+                      // ANTES: dispColor.withOpacity(0.15)  (DEPRECADO)
+                      // AHORA: usa withValues para evitar la advertencia del linter
+                      backgroundColor: dispColor.withValues(alpha: 0.15),
+                      child: Icon(dispIcon, color: dispColor),
                     ),
                     title: Text(c.nombre),
                     subtitle: Text('Deporte: ${c.deporte} • Sede: ${c.sede.nombre}'),
@@ -123,6 +123,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 
 
 

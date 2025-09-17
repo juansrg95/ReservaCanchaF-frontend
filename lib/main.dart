@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'ui/home_page.dart'; // Traigo la pantalla inicial desde /ui
+import 'ui/home_page.dart';
 
+/// Punto de entrada de mi app.
 void main() {
-  runApp(const ReservaCanchasApp()); // Punto de entrada: arranco mi app
+  runApp(const ReservaCanchasApp());
 }
 
+/// Configuración general de temas y ruta inicial.
 class ReservaCanchasApp extends StatelessWidget {
   const ReservaCanchasApp({super.key});
 
@@ -12,12 +14,12 @@ class ReservaCanchasApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Reserva de Canchas',
-      debugShowCheckedModeBanner: false, // saco la cinta DEBUG
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green), // verde = canchas
-        useMaterial3: true, // Material Design 3
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        useMaterial3: true,
       ),
-      home: const HomePage(), // pantalla inicial
+      home: const HomePage(),
     );
   }
 }
