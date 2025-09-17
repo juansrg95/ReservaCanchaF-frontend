@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListTile(
                     // Un avatar/icono más “bonito”
                     leading: CircleAvatar(
-                      backgroundColor: dispColor.withOpacity(.15),
+                      backgroundColor: dispColor.withOpacity(40),
                       child: Icon(dispIcon, color: dispColor),
                     ),
 
