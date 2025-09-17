@@ -39,6 +39,10 @@ dev_dependencies:
 flutter:
   # Incluye la tipografía de Material Icons para poder usar Icon(Icons.xxx).
   uses-material-design: true
+#-----------imagenes----------------------
+  assets:
+      - assets/canchas/
+
 
   # Si más adelante cargo imágenes o JSON locales, descomento y agrego rutas aquí:
   # assets:
