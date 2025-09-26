@@ -1,15 +1,26 @@
-// lib/models/cancha.dart
-// Modelo de Cancha alineado con lo que devuelve el backend.
-// OJO: el backend envía "sede" como OBJETO { id, nombre, direccion }, no "sede_id".
+class Sede {
+  final int id;
+  final String nombre;
+  final String direccion;
 
-import 'sede.dart';
+  Sede({required this.id, required this.nombre, required this.direccion});
+
+  factory Sede.fromJson(Map<String, dynamic> j) =>
+      Sede(id: j['id'], nombre: j['nombre'], direccion: j['direccion']);
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'nombre': nombre,
+        'direccion': direccion,
+      };
+}
 
 class Cancha {
   final int id;
   final String nombre;
   final String deporte;
   final bool activa;
-  final Sede sede; // <- ahora guardo el objeto Sede completo
+  final Sede sede;
 
   Cancha({
     required this.id,
@@ -19,14 +30,23 @@ class Cancha {
     required this.sede,
   });
 
-  factory Cancha.fromJson(Map<String, dynamic> json) {
-    return Cancha(
-      id: json['id'] as int,
-      nombre: json['nombre'] as String,
-      deporte: json['deporte'] as String,
-      activa: json['activa'] as bool,
-      sede: Sede.fromJson(json['sede'] as Map<String, dynamic>), // <- parseo la sede
-    );
-  }
+  factory Cancha.fromJson(Map<String, dynamic> j) => Cancha(
+        id: j['id'],
+        nombre: j['nombre'],
+        deporte: j['deporte'],
+        activa: j['activa'] == true,
+        sede: Sede.fromJson(j['sede']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'nombre': nombre,
+        'deporte': deporte,
+        'activa': activa,
+        'sede': sede.toJson(),
+      };
 }
+
+
+
 

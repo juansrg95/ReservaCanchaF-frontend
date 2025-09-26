@@ -1,58 +1,30 @@
-# Nombre único del proyecto (coincide con la carpeta).
 name: reservacanchaf_frontend
-
-# Breve descripción del proyecto.
 description: "Frontend Flutter para reservar canchas (web)."
-
-# Evito publicar accidentalmente el paquete en pub.dev.
 publish_to: 'none'
-
-# Versión de la app: mayor.menor.parche + número de build.
 version: 1.0.0+1
 
-# Versión de Dart/Flutter que usa este proyecto.
 environment:
   sdk: ^3.9.2
 
-# ----------- Dependencias de la aplicación -----------
 dependencies:
-  # SDK principal de Flutter (imprescindible).
   flutter:
     sdk: flutter
-
-  # Paquete HTTP para hacer solicitudes REST a mi backend (GET/POST/PUT/DELETE).
-  http: ^1.5.0
-
-  # Íconos estilo iOS (opcional, útil si los necesito).
+  http: ^1.2.0
   cupertino_icons: ^1.0.8
+  provider: ^6.0.5
+  google_fonts: ^6.3.1
+  intl: ^0.19.0
+  shared_preferences: ^2.3.2
 
-# ----------- Dependencias solo para desarrollo/testing -----------
 dev_dependencies:
-  # Framework de pruebas unitarias/widget para Flutter.
   flutter_test:
     sdk: flutter
-
-  # Conjunto de reglas de lint recomendadas por Google para mantener buen estilo.
   flutter_lints: ^5.0.0
 
-# ----------- Configuración específica de Flutter -----------
 flutter:
-  # Incluye la tipografía de Material Icons para poder usar Icon(Icons.xxx).
   uses-material-design: true
-#-----------imagenes----------------------
   assets:
-      - assets/canchas/
+    - assets/canchas/cancha_norte.jpg
+    - assets/canchas/cancha_techada.jpg
+    - assets/canchas/cancha_sur.jpg
 
-
-  # Si más adelante cargo imágenes o JSON locales, descomento y agrego rutas aquí:
-  # assets:
-  #   - assets/images/
-  #   - assets/data/
-
-  # Para fuentes personalizadas, este sería el bloque de ejemplo:
-  # fonts:
-  #   - family: Montserrat
-  #     fonts:
-  #       - asset: assets/fonts/Montserrat-Regular.ttf
-  #       - asset: assets/fonts/Montserrat-Bold.ttf
-  #         weight: 700
