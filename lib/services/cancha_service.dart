@@ -1,26 +1,66 @@
+// lib/services/cancha_service.dart
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../config/env.dart';
-import '../models/cancha.dart';
 
-/// Servicio que habla con mi backend (Spring) para obtener las canchas.
+import 'package:reservacanchaf_frontend/core/api_client.dart';
+import 'package:reservacanchaf_frontend/models/cancha.dart' as cmodel;
+
 class CanchaService {
-  /// Traigo todas las canchas con un GET a `${Env.baseUrl}/api/canchas`.
-  Future<List<Cancha>> getCanchas() async {
-    final uri = Uri.parse('${Env.baseUrl}/api/canchas/activas');
+  final _api = ApiClient();
 
-    final resp = await http.get(uri, headers: {
-      'Content-Type': 'application/json',
-    });
-
-    if (resp.statusCode == 200) {
-      // Mi backend devuelve un JSON con lista de canchas
-      final List data = json.decode(resp.body);
-      return data.map((e) => Cancha.fromJson(e as Map<String, dynamic>)).toList();
+  Future<List<cmodel.Cancha>> activas() async {
+    final r = await _api.get('/api/canchas/activas');
+    if (r.statusCode != 200) {
+      throw Exception('Error listando canchas activas: ${r.statusCode}');
     }
 
-    // Si algo falla, lanzo una excepción para mostrar error en UI
-    throw Exception('Error ${resp.statusCode} al cargar canchas');
+    final data = jsonDecode(r.body) as List;
+
+    return data.map<cmodel.Cancha>((e) {
+      final m = (e as Map).cast<String, dynamic>();
+
+      // Si tu modelo tiene fromJson, úsalo primero
+      try {
+        return cmodel.Cancha.fromJson(m);
+      } catch (_) {
+        // Fallback manual si el fromJson no calza
+        final sedeMap = (m['sede'] as Map?)?.cast<String, dynamic>();
+
+        final cmodel.Sede sede = cmodel.Sede(
+          id: (sedeMap?['id'] as num?)?.toInt() ?? 0,
+          nombre: (sedeMap?['nombre'] ?? '').toString(),
+          direccion: (sedeMap?['direccion'] ?? '').toString(), // <- OBLIGATORIO
+        );
+
+        return cmodel.Cancha(
+          id: (m['id'] as num?)?.toInt() ?? 0,
+          activa: (m['activa'] as bool?) ?? true,
+          nombre: (m['nombre'] ?? '').toString(),
+          deporte: (m['deporte'] ?? '').toString(),
+          sede: sede,
+        );
+      }
+    }).toList();
+  }
+
+  Future<void> eliminar(int id) async {
+    final r = await _api.delete('/api/canchas/$id');
+    if (r.statusCode < 200 || r.statusCode >= 300) {
+      throw Exception('Error eliminando cancha: ${r.statusCode} - ${r.body}');
+    }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

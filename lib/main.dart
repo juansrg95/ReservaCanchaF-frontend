@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
-import 'ui/home_page.dart';
+import 'ui/shell_page.dart';
+import 'ui/login_page.dart';
+import 'ui/register_page.dart';
 
-/// Punto de entrada de mi app.
 void main() {
-  runApp(const ReservaCanchasApp());
+  runApp(const App());
 }
 
-/// Configuración general de temas y ruta inicial.
-class ReservaCanchasApp extends StatelessWidget {
-  const ReservaCanchasApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Reserva de Canchas',
       debugShowCheckedModeBanner: false,
+      title: 'Reserva de Canchas',
+      // IMPORTANTE: definimos /shell para que el login haga pushReplacementNamed('/shell')
+      initialRoute: '/shell',
+      routes: {
+        '/shell': (_) => const ShellPage(),
+        '/login': (_) => const LoginPage(),
+        '/register': (_) => const RegisterPage(),
+      },
+      // si alguien navega a una ruta rara, lo mando al shell
+      onUnknownRoute: (_) =>
+          MaterialPageRoute(builder: (_) => const ShellPage()),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorSchemeSeed: Colors.green,
         useMaterial3: true,
       ),
-      home: const HomePage(),
     );
   }
 }
+
+
 

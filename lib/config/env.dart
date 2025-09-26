@@ -1,5 +1,8 @@
-/// Variables de configuración de mi app Flutter.
+// lib/env.dart
 class Env {
-  /// URL base de mi backend Spring Boot (ajústala si usas otro puerto/host).
-  static const String baseUrl = 'http://localhost:8080';
+  /// URL base de tu backend (sin / al final)
+  static const String apiBase = 'http://75.101.224.153:8080';
 }
+
+
+

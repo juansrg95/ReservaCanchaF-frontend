@@ -1,20 +1,14 @@
 class Sede {
   final int id;
   final String nombre;
-  final String direccion;
 
-  Sede({
-    required this.id,
-    required this.nombre,
-    required this.direccion,
-  });
+  Sede({required this.id, required this.nombre});
 
-  factory Sede.fromJson(Map<String, dynamic> json) {
-    return Sede(
-      id: json['id'],
-      nombre: json['nombre'],
-      direccion: json['direccion'],
-    );
-  }
+  factory Sede.fromJson(Map<String, dynamic> j) =>
+      Sede(id: j['id'] as int, nombre: j['nombre'] as String? ?? 'Sede');
+
+  Map<String, dynamic> toJson() => {'id': id, 'nombre': nombre};
 }
+
+
 
